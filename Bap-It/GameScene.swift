@@ -13,6 +13,8 @@ class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
+    private var bopitButton : SKShapeNode?
+    private var centerOfScreen : CGPoint?
     
     override func didMove(to view: SKView) {
         
@@ -22,6 +24,23 @@ class GameScene: SKScene {
             label.alpha = 0.0
             label.run(SKAction.fadeIn(withDuration: 2.0))
         }
+        
+        centerOfScreen = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint.zero,
+                    radius: 50,
+                    startAngle: 0,
+                    endAngle: CGFloat.pi * 2,
+                    clockwise: true)
+        bopitButton = SKShapeNode(path: path)
+        bopitButton!.lineWidth = 1
+        bopitButton!.fillColor = .red
+        bopitButton!.strokeColor = .white
+        bopitButton!.glowWidth = 0.5
+        bopitButton!.name = "bopitButton"
+        
+        self.addChild(bopitButton!)
         
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05
@@ -36,8 +55,7 @@ class GameScene: SKScene {
                                               SKAction.removeFromParent()]))
         }
     }
-    
-    
+
     func touchDown(atPoint pos : CGPoint) {
         if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = pos
